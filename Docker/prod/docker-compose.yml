@@ -1,0 +1,64 @@
+version: '2'
+networks:
+  project:
+services:
+  project:
+    build:
+      context: ../../
+      dockerfile: ./Docker/prod/project/Dockerfile
+    image: codors/django
+    volumes:
+      - ../../app/:/home/docker/app/:rw
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./default-ssl.conf:/etc/apache2/sites-available/default-ssl.conf
+      - ../../letsencrypt/:/etc/letsencrypt/:rw
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - postgresql
+      - redis
+      # - mongo
+    links:
+      - redis:redis
+      - postgresql:postgresql
+      # - mongo:mongo
+    networks:
+      project:
+        aliases:
+          - project
+  postgresql:
+    image: mdillon/postgis:11
+    volumes:
+      - ../../databases/prod/postgresql/data:/var/lib/postgresql/data:rw
+    # ports:
+    #   - "5430:5432"
+    environment:
+      - POSTGRES_DB=project
+      - POSTGRES_USER=project
+      - POSTGRES_PASSWORD=Pr0JecT
+    networks:
+      project:
+        aliases:
+          - postgresql
+  redis:
+    image: redis
+    volumes:
+      - ../../databases/prod/redis/data:/data:rw
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    # ports:
+    #  - "6300:6379"
+    networks:
+      project:
+        aliases:
+          - redis
+  # mongo:
+  #   image: mongo
+  #   volumes:
+  #   - ../../databases/prod/mongo/data:/data
+  #   # ports:
+  #   #   - "27017:27017"
+  #   networks:
+  #     project:
+  #       aliases:
+  #         - mongo

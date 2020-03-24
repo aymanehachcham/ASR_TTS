@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ title }} | Project administration {% endblock %}
+
+{% block extrahead %}
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico'  %}" />
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}"> Project administration</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

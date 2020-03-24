@@ -1,0 +1,46 @@
+# General
+*~
+
+# Python
+*.pyc
+env/
+db.sqlite3
+*.dat
+*.csv
+*.xls
+*.xlsx
+#*.pkl
+.kernel*
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+databases/**/data
+
+# Jupyter notebook
+.ipynb_checkpoints/
+
+*.pdf
+
+# Git
+.gitlab-ci.yml
+
+# log
+*.log
+
+# media
+**/media/**
+!**/media
+!**/media/**/__init__.py
+
+# images
+**notebooks/images/**
+!**notebooks/images/
+!**notebooks/images/__init__.py
+
+# others
+others/
+
+# Docker
+bin/
+lib/

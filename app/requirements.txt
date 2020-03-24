@@ -1,0 +1,12 @@
+Django
+drfdocs
+djangorestframework
+django-cors-headers
+django-redis
+django-redis-cache
+django-extensions
+psycopg2-binary
+pyyaml
+ua-parser
+user-agents
+django-user-agents
