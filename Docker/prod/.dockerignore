@@ -1,6 +1,0 @@
-.git
-
-# To prevent storing dev/temporary container data
-*.csv
-/tmp/*
-

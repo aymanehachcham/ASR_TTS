@@ -6,20 +6,15 @@ services:
     build:
       context: ../../
       dockerfile: ./Docker/dev/project/Dockerfile
-    image: codors/django
+    image: ai3/quarteznet
     volumes:
       - ../../app/:/home/docker/app/:rw
     ports:
       - "8000:8000"
-      # - "8898:8898"
     depends_on:
       - postgresql
-      - redis
-      # - mongo
     links:
-      - redis:redis
       - postgresql:postgresql
-      # - mongo:mongo
     networks:
       project:
         aliases:
@@ -38,24 +33,4 @@ services:
       project:
         aliases:
           - postgresql
-  redis:
-    image: redis
-    volumes:
-      - ../../databases/dev/redis/data:/data:rw
-      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
-    # ports:
-    #  - "6300:6379"
-    networks:
-      project:
-        aliases:
-          - redis
-  # mongo:
-  #   image: mongo
-  #   volumes:
-  #   - ../../databases/dev/mongo/data:/data
-  #   # ports:
-  #   #   - "27017:27017"
-  #   networks:
-  #     project:
-  #       aliases:
-  #         - mongo
+

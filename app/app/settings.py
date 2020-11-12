@@ -44,12 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'django_user_agents',
     'rest_framework',
     'rest_framework_docs',
     'rest_framework.authtoken',
-    'django_extensions'
+    'django_extensions',
+    'quertznet',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -68,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware', # This must be last
 ]
+'rest_framework.authentication.BasicAuthentication',
 
 ROOT_URLCONF = 'app.urls'
 
@@ -105,13 +105,6 @@ DATABASES = {
    }
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'redis:6379',
-        'TIMEOUT': 60,
-    },
-}
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
@@ -123,20 +116,13 @@ AUTHENTICATION_BACKENDS = (
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [],
+
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.TemplateHTMLRenderer',
     ),
-    'DEFAULT_METADATA_CLASS': 'dashboard.metadata.Metadata'
 }
 
 # Password validation
@@ -193,3 +179,22 @@ else:
     # CORS_ORIGIN_WHITELIST = (
     #     'www.project.com',
     # )
+
+
+
+#if you want to set password you should
+NOTEBOOK_ARGUMENTS = [
+    # set password # from IPython.lib import passwd
+   '--NotebookApp.password=sha1:6395407ca162:e7ffca18e1e9a19334875543a6ab155de1e456af',
+    # exposes IP and port
+    '--ip', '0.0.0.0',
+    '--port', '8898',
+    # allow root
+    '--allow-root',
+    # disables the browser
+    '--no-browser',
+    # work directory
+    '--notebook-dir="/home/docker/app/notebooks/"',
+]
+
+TIME_ZONE='Africa/Casablanca'

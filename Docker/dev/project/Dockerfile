@@ -29,6 +29,8 @@ wget &&\
 apt-get install -y \
 libzbar-dev \
 imagemagick \
+zip \
+unzip \
 xvfb &&\
 rm -rf /var/lib/apt/lists/*
 
@@ -44,6 +46,19 @@ rm -rf /var/lib/apt/lists/*
 RUN apt-get update && \
     apt-get install binutils libproj-dev gdal-bin libgeoip1 postgis python-gdal -y &&\
     rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -y && apt-get install -y --no-install-recommends build-essential gcc \
+                                        libsndfile1 \
+                                        ffmpeg \
+                                        libsndfile1-dev \
+                                        llvm-7 \
+                                        libblas-dev \
+                                        liblapack-dev \
+                                        libatlas-base-dev \
+                                        gfortran
+
+
+#RUN gunicorn -b :5000 --access-logfile - --error-logfile - app:app
 
 ENV SHELL /bin/bash
 
@@ -62,3 +77,4 @@ RUN mkdir -p /home/docker/app/
 WORKDIR /home/docker/app
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
